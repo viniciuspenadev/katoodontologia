@@ -1,0 +1,230 @@
+---
+import { Image } from 'astro:assets';
+import BandEdge from './BandEdge.astro';
+import mockup01 from '../assets/depoimentos/mockup-01.png';
+import mockup02 from '../assets/depoimentos/mockup-02.png';
+import mockup03 from '../assets/depoimentos/mockup-03.png';
+import mockup04 from '../assets/depoimentos/mockup-04.png';
+
+const historias = [
+  { image: mockup01, name: 'Nome do paciente', line: 'Hoje eu sorrio com mais tranquilidade.' },
+  { image: mockup02, name: 'Nome da paciente', line: 'Fui acolhida desde a primeira consulta.' },
+  { image: mockup03, name: 'Nome do paciente', line: 'Entendi cada etapa do meu tratamento.' },
+  { image: mockup04, name: 'Nome da paciente', line: 'Hoje venho ao dentista sem medo.' },
+];
+---
+
+<section class="section band band--light depo" id="avaliacoes">
+  <BandEdge />
+
+  <div class="shell shell--wide">
+    <header class="depo__head">
+      <p class="eyebrow eyebrow--plain" data-reveal>Pacientes</p>
+      <h2 data-reveal>Quem viveu o cuidado, <span class="em">conta.</span></h2>
+    </header>
+
+    <div class="depo__rail" aria-label="Mockup de depoimentos em vídeo">
+      {
+        historias.map((historia, index) => (
+          <article class="story" data-reveal>
+            <button class="story__media" type="button" aria-label={`Prévia demonstrativa de ${historia.name}`}>
+              <Image
+                src={historia.image}
+                alt="Retrato demonstrativo para futuro depoimento de paciente"
+                widths={[360, 540, 720]}
+                sizes="(min-width: 70rem) 17rem, (min-width: 42rem) 31vw, 78vw"
+                format="avif"
+                quality={80}
+                loading="lazy"
+              />
+              <span class="story__shade" aria-hidden="true"></span>
+              <span class="story__play" aria-hidden="true">▶</span>
+              <span class="story__line">{historia.line}</span>
+              <strong class="story__name-in">{historia.name}</strong>
+            </button>
+            <div class="story__meta">
+              <strong>{historia.name}</strong>
+              <span>Paciente Kato</span>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .depo {
+    --surface: #fff;
+    --surface-raised: #fff;
+    z-index: 4;
+    overflow: visible;
+    background: #fff;
+  }
+
+  .depo :global(.edge) {
+    height: clamp(4rem, 6vw, 6rem);
+    z-index: 3;
+  }
+
+  .depo > :global(.edge) + .shell {
+    position: relative;
+    z-index: 4;
+  }
+
+  .depo__head {
+    display: grid;
+    justify-items: center;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+    text-align: center;
+  }
+
+  .depo__head .eyebrow {
+    font-weight: 600;
+    color: var(--teal-500);
+  }
+
+  .depo__head h2 {
+    max-width: 13ch;
+    margin-top: var(--space-m);
+    font-size: clamp(2.45rem, 4vw, 4rem);
+  }
+
+  .depo__rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.9rem, 1.8vw, 1.5rem);
+  }
+
+  .story {
+    min-width: 0;
+  }
+
+  .story__media {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: clamp(1.2rem, 1.8vw, 1.65rem);
+    background: #0a2025;
+    box-shadow: 0 1.1rem 3rem rgb(7 26 31 / 0.13);
+    cursor: default;
+  }
+
+  .story__media :global(img) {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    transition: transform 600ms var(--ease-out), filter 600ms var(--ease-out);
+  }
+
+  .story__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgb(4 16 19 / 0.05), transparent 40%, rgb(4 16 19 / 0.78) 100%),
+      linear-gradient(90deg, rgb(4 16 19 / 0.08), transparent 45%);
+    pointer-events: none;
+  }
+
+  .story__play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    display: grid;
+    place-items: center;
+    width: clamp(3.7rem, 5vw, 4.35rem);
+    aspect-ratio: 1;
+    padding-left: 0.2rem;
+    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--aqua-300), var(--teal-500));
+    color: #06262b;
+    font-size: 0.9rem;
+    box-shadow: 0 0.8rem 2rem rgb(4 16 19 / 0.22);
+    transform: translate(-50%, -50%);
+    transition: transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+  }
+
+  .story__line {
+    position: absolute;
+    inset: auto 1.1rem 4.1rem;
+    font-family: var(--font-text);
+    font-size: clamp(0.82rem, 1vw, 0.96rem);
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 2px 18px rgb(0 0 0 / 0.32);
+  }
+
+  .story__name-in {
+    position: absolute;
+    inset: auto 1rem 1.55rem;
+    font-family: var(--font-text);
+    font-size: clamp(1.15rem, 1.45vw, 1.4rem);
+    font-weight: 520;
+    line-height: 1.1;
+    color: #fff;
+    text-shadow: 0 2px 18px rgb(0 0 0 / 0.34);
+  }
+
+  .story__media:hover :global(img) {
+    filter: saturate(1.04);
+    transform: scale(1.025);
+  }
+
+  .story__media:hover .story__play {
+    background: linear-gradient(135deg, #d4faf2, var(--aqua-300));
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  .story__meta {
+    display: grid;
+    justify-items: center;
+    gap: 0.18rem;
+    margin-top: 0.9rem;
+    text-align: center;
+  }
+
+  .story__meta strong {
+    font-size: 0.98rem;
+    font-weight: 650;
+    color: var(--ink-1);
+  }
+
+  .story__meta span {
+    font-family: var(--font-label);
+    font-size: 0.59rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-500);
+  }
+
+  @media (width < 70rem) {
+    .depo__rail {
+      grid-template-columns: repeat(4, minmax(15.5rem, 31vw));
+      overflow-x: auto;
+      margin-inline: calc(var(--gutter) * -1);
+      padding: 0 var(--gutter) 1.25rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .depo__rail::-webkit-scrollbar { display: none; }
+    .story { scroll-snap-align: center; }
+  }
+
+  @media (width < 42rem) {
+    .depo__rail {
+      grid-template-columns: repeat(4, minmax(17rem, 78vw));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .story__media :global(img),
+    .story__play { transition: none; }
+  }
+</style>

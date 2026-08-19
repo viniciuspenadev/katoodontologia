@@ -1,0 +1,200 @@
+---
+import { Image } from 'astro:assets';
+import familiaKato from '../assets/familia-kato-recorte-v2.png';
+---
+
+<section class="band historia" id="clinica" aria-label="Família Kato">
+  <div class="shell shell--wide historia__layout">
+    <div class="historia__content" data-reveal>
+      <p class="historia__eyebrow">
+        <span aria-hidden="true"></span>
+        A Kato
+      </p>
+      <h2>Uma família cuidando da <em>sua.</em></h2>
+      <p class="historia__body">
+        Desde 1995, a Kato faz parte da história de Guarulhos. Tradição, atualização
+        clínica e um cuidado próximo que atravessa gerações.
+      </p>
+    </div>
+
+    <div class="historia__family" data-reveal>
+      <Image
+        src={familiaKato}
+        alt="Dr. Renan Kato, Dr. Nelson Kato e Dr. Leonardo Kato"
+        widths={[720, 960, 1280]}
+        sizes="(min-width: 62rem) 48rem, 96vw"
+        format="webp"
+        quality={90}
+        loading="lazy"
+      />
+    </div>
+  </div>
+  <div class="historia__wave" aria-hidden="true"></div>
+</section>
+
+<style>
+  .historia {
+    position: relative;
+    height: clamp(46rem, 64vw, 56rem);
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 18% 48%, rgb(4 76 83 / 0.4), transparent 30rem),
+      radial-gradient(circle at 76% 12%, rgb(217 242 245 / 0.34), transparent 27rem),
+      linear-gradient(to top, #07535c 0%, #0e7c86 30%, #2bb8c4 65%, #91e1e8 100%);
+    isolation: isolate;
+  }
+
+  .historia__layout {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+    padding-top: clamp(8.5rem, 12vw, 11rem);
+    padding-bottom: 0;
+  }
+
+  .historia__content {
+    width: min(34%, 27rem);
+  }
+
+  .historia__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-family: var(--font-label);
+    font-size: 0.72rem;
+    font-weight: 550;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.78);
+  }
+
+  .historia__eyebrow span {
+    width: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--aqua-300));
+  }
+
+  .historia__content h2 {
+    max-width: 8.5ch;
+    font-family: var(--font-display);
+    font-size: clamp(2.7rem, 4vw, 4.25rem);
+    font-weight: 380;
+    font-variation-settings: 'opsz' 48;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    color: #eef5f6;
+    text-wrap: balance;
+  }
+
+  .historia__content h2 em {
+    font-weight: inherit;
+    color: #c9f4f7;
+  }
+
+  .historia__body {
+    max-width: 36ch;
+    margin-top: 1.5rem;
+    font-size: clamp(0.96rem, 0.9rem + 0.2vw, 1.08rem);
+    line-height: 1.65;
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  .historia__family {
+    position: absolute;
+    z-index: 2;
+    left: 25%;
+    bottom: clamp(-9rem, -9vw, -6rem);
+    width: min(72%, 52rem);
+    pointer-events: none;
+  }
+
+  .historia__family :global(img) {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 1.5rem 2.5rem rgb(0 0 0 / 0.16));
+  }
+
+  .historia__wave {
+    position: absolute;
+    z-index: 4;
+    inset: auto 0 0;
+    height: clamp(2.4rem, 3.2vw, 3.25rem);
+    background: var(--paper-1);
+  }
+
+  .historia__wave::before {
+    content: '';
+    position: absolute;
+    left: -8%;
+    bottom: -12%;
+    width: 116%;
+    height: clamp(4.5rem, 6vw, 6.5rem);
+    border-radius: 50% 50% 0 0 / 42% 58% 0 0;
+    background: var(--paper-1);
+    transform: rotate(-2.2deg);
+    transform-origin: 50% 100%;
+  }
+
+  @media (width < 62rem) {
+    .historia {
+      height: clamp(48rem, 128vw, 58rem);
+    }
+
+    .historia__layout {
+      align-items: flex-start;
+      padding-top: clamp(8rem, 18vw, 10rem);
+      padding-bottom: 0;
+    }
+
+    .historia__content {
+      width: min(100%, 36rem);
+    }
+
+    .historia__content h2 {
+      max-width: 11ch;
+    }
+
+    .historia__family {
+      left: 50%;
+      bottom: clamp(-6rem, -9vw, -3.5rem);
+      width: min(88vw, 40rem);
+    }
+  }
+
+  @media (width < 38rem) {
+    .historia {
+      height: clamp(47rem, 180vw, 55rem);
+    }
+
+    .historia__layout {
+      width: calc(100% - 2rem);
+      padding-top: 7.5rem;
+    }
+
+    .historia__content h2 {
+      font-size: clamp(2.55rem, 12vw, 3.65rem);
+    }
+
+    .historia__body {
+      max-width: 34ch;
+      margin-top: 1.15rem;
+    }
+
+    .historia__family {
+      bottom: -3rem;
+      width: min(100vw, 32rem);
+    }
+
+    .historia__wave {
+      height: 2.25rem;
+    }
+
+    .historia__wave::before {
+      bottom: -10%;
+      height: 4.1rem;
+    }
+  }
+</style>

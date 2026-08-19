@@ -1,0 +1,48 @@
+---
+/**
+ * Line icons drawn to the same rules as the rest of the system: 1.5 stroke on
+ * a 24 grid, butt caps, miter joins — square-ended, like the logo's K.
+ * No rounded caps, no filled pictograms, no emoji.
+ */
+type Name = 'clock' | 'pin' | 'grid' | 'team' | 'arrow' | 'whatsapp' | 'phone';
+
+interface Props {
+  name: Name;
+  size?: number;
+}
+const { name, size = 28 } = Astro.props;
+
+const paths: Record<Name, string> = {
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 6.75V12l3.75 2.25"/>',
+  pin: '<path d="M12 21.5S5 15.4 5 10.5a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10.3" r="2.6"/>',
+  grid: '<path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/>',
+  team: '<circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 20.5c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><path d="M16 5.4a3.5 3.5 0 0 1 0 6.7"/><path d="M17.6 14.4c2.3.8 3.9 3 3.9 5.6"/>',
+  arrow: '<path d="M4 12h16M14 6l6 6-6 6"/>',
+  whatsapp:
+    '<path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.3A8.5 8.5 0 1 1 20.5 11.7Z"/><path d="M8.9 8.6c.3-.1.6 0 .8.3l.8 1.3c.1.3.1.5-.1.7l-.5.6c.6 1.1 1.5 2 2.6 2.6l.6-.5c.2-.2.5-.2.7-.1l1.3.8c.3.2.4.5.3.8-.3.8-1.1 1.3-1.9 1.2-2.7-.4-4.9-2.6-5.3-5.3-.1-.8.4-1.6 1.2-1.9Z"/>',
+  phone:
+    '<path d="M6.2 3.5h3l1.5 3.7-1.9 1.4a11.5 11.5 0 0 0 5.6 5.6l1.4-1.9 3.7 1.5v3c0 .9-.7 1.7-1.7 1.7A15.6 15.6 0 0 1 4.5 5.2c0-1 .8-1.7 1.7-1.7Z"/>',
+};
+---
+
+<svg
+  class="icon"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="butt"
+  stroke-linejoin="miter"
+  aria-hidden="true"
+  focusable="false"
+  set:html={paths[name]}
+/>
+
+<style>
+  .icon {
+    display: block;
+    flex: none;
+  }
+</style>

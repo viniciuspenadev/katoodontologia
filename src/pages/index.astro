@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Hero from '../components/Hero.astro';
+import Faixa from '../components/Faixa.astro';
+import Historia from '../components/Historia.astro';
+import Especialidades from '../components/Especialidades.astro';
+import Equipe from '../components/Equipe.astro';
+import Depoimentos from '../components/Depoimentos.astro';
+import Unidades from '../components/Unidades.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { site, unidades, especialidades } from '../data/site';
+
+const title = `${site.name} — Clínica odontológica em Guarulhos desde 1995`;
+const description =
+  'Clínica odontológica em Guarulhos há mais de 30 anos. Duas unidades, seis especialidades: implantes e próteses, ortodontia, endodontia, odontopediatria, restauração e clareamento.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dentist',
+  name: site.name,
+  description,
+  url: 'https://katoodontologia.com.br/',
+  sameAs: [site.social.instagram, site.social.facebook],
+  foundingDate: String(site.since),
+  availableService: especialidades.map((e) => ({ '@type': 'MedicalProcedure', name: e.name })),
+  location: unidades.map((u) => ({
+    '@type': 'DentalClinic',
+    name: `${site.name} — ${u.name}`,
+    telephone: u.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: u.street,
+      addressLocality: `${u.district}, ${u.city}`,
+      addressRegion: u.state,
+      addressCountry: 'BR',
+    },
+  })),
+};
+---
+
+<Base title={title} description={description}>
+  <SiteHeader />
+
+  {/* Band rhythm — dark, light, dark, light, dark, light, dark. Each
+      transition is a swoosh edge, alternating direction. */}
+  <main id="main">
+    <Hero />
+    <Faixa />
+    <Historia />
+    <Especialidades />
+    <Equipe />
+    <Depoimentos />
+    <Unidades />
+  </main>
+
+  <SiteFooter />
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  <script>
+    import '../scripts/motion.ts';
+  </script>
+</Base>

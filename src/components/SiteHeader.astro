@@ -1,0 +1,627 @@
+---
+import { Image } from 'astro:assets';
+import Logo from './Logo.astro';
+import { especialidades, primaryWhats } from '../data/site';
+import { especialidadeFotos } from '../data/especialidades-fotos';
+
+const links = [
+  { href: '#clinica', label: 'A clínica' },
+  { href: '#especialidades', label: 'Especialidades', mega: true },
+  { href: '#equipe', label: 'Equipe' },
+  { href: '#avaliacoes', label: 'Avaliações' },
+  { href: '#contato', label: 'Unidades' },
+];
+
+const frentes = especialidades.map((especialidade, index) => ({
+  ...especialidade,
+  image: especialidadeFotos[index],
+}));
+---
+
+<header class="hdr" data-header>
+  <div class="hdr__inner">
+    <a href="#top" class="hdr__brand" aria-label="Kato Odontologia — início">
+      <Logo tone="dark" compact />
+    </a>
+
+    <nav class="hdr__nav" aria-label="Navegação principal">
+      <ul class="hdr__list">
+        {
+          links.map((link) =>
+            link.mega ? (
+              <li class="hdr__item hdr__item--mega">
+                <a class="hdr__link hdr__link--mega" href={link.href}>
+                  {link.label}
+                  <span class="hdr__chev" aria-hidden="true" />
+                </a>
+
+                <div class="mega">
+                  <div class="mega__inner band--light">
+                    <div class="mega__stage">
+                      {frentes.map((frente, index) => (
+                        <figure class:list={['mega__fig', `mega__fig--${index}`]}>
+                          <Image
+                            src={frente.image}
+                            alt=""
+                            width={208}
+                            height={370}
+                            densities={[1, 2]}
+                            fit="cover"
+                            position="center"
+                            format="avif"
+                            quality={76}
+                            loading="lazy"
+                          />
+                          <figcaption>{frente.name}</figcaption>
+                        </figure>
+                      ))}
+                    </div>
+
+                    <div class="mega__list">
+                      <p class="mega__eyebrow">Seis frentes, um diagnóstico</p>
+
+                      <ul>
+                        {frentes.map((frente, index) => (
+                          <li>
+                            <a
+                              class:list={['mega__row', `mega__row--${index}`]}
+                              href="#especialidades"
+                              data-mega-jump={index}
+                            >
+                              <span class="mega__n">{frente.n}</span>
+                              <span class="mega__name">{frente.name}</span>
+                              <span class="mega__go" aria-hidden="true">↗</span>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <a class="mega__all" href="#especialidades">
+                        Ver a seção completa <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ) : (
+              <li><a class="hdr__link" href={link.href}>{link.label}</a></li>
+            )
+          )
+        }
+      </ul>
+    </nav>
+
+    <a class="hdr__cta" href={primaryWhats} target="_blank" rel="noopener">
+      Agendar
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <button class="hdr__toggle" type="button" aria-expanded="false" aria-controls="menu-movel" data-menu-toggle>
+      <span class="visually-hidden">Abrir menu</span>
+      <span class="hdr__bars" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <div class="hdr__panel" id="menu-movel" data-menu-panel hidden>
+    <ul class="hdr__panel-list">
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+            {link.mega && (
+              <ul class="hdr__sub">
+                {frentes.map((frente, index) => (
+                  <li>
+                    <a href="#especialidades" data-mega-jump={index}>
+                      <span>{frente.n}</span>
+                      {frente.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <a class="hdr__panel-cta" href={primaryWhats} target="_blank" rel="noopener">
+      Agendar pelo WhatsApp <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: fixed;
+    inset: clamp(1rem, 2vw, 1.5rem) 0 auto;
+    z-index: 100;
+    padding-inline: clamp(1rem, 2.8vw, 2.5rem);
+    pointer-events: none;
+    transition: inset var(--dur-base) var(--ease-out);
+  }
+
+  .hdr[data-stuck] {
+    inset-block-start: 0.6rem;
+  }
+
+  .hdr__inner,
+  .hdr__panel {
+    width: min(100%, 76rem);
+    margin-inline: auto;
+    pointer-events: auto;
+    border: 1px solid rgb(7 26 31 / 0.08);
+    background: rgb(248 250 249 / 0.94);
+    box-shadow: 0 0.7rem 2rem rgb(5 12 14 / 0.14);
+    backdrop-filter: blur(16px) saturate(130%);
+  }
+
+  .hdr__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 2.5vw, 2.5rem);
+    min-height: 4.4rem;
+    padding: 0.45rem 0.5rem 0.45rem 1.35rem;
+    border-radius: 999px;
+    transition: min-height var(--dur-base) var(--ease-out);
+  }
+
+  .hdr[data-stuck] .hdr__inner {
+    min-height: 3.85rem;
+  }
+
+  .hdr__brand {
+    display: flex;
+    margin-right: auto;
+    text-decoration: none;
+  }
+
+  .hdr__nav,
+  .hdr__cta {
+    display: none;
+  }
+
+  .hdr__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 1.8vw, 1.75rem);
+    list-style: none;
+    padding: 0;
+  }
+
+  .hdr__link {
+    position: relative;
+    display: block;
+    padding-block: 0.45rem;
+    font-family: var(--font-text);
+    font-size: clamp(0.72rem, 0.68rem + 0.13vw, 0.82rem);
+    font-weight: 540;
+    line-height: 1;
+    text-decoration: none;
+    color: rgb(7 26 31 / 0.72);
+  }
+
+  .hdr__link::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 -0.1rem;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--teal-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .hdr__link:hover,
+  .hdr__link[aria-current='true'] {
+    color: var(--ink-1);
+  }
+
+  .hdr__link:hover::after,
+  .hdr__link[aria-current='true']::after {
+    transform: scaleX(1);
+  }
+
+  .hdr__link--mega {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .hdr__chev {
+    width: 0.3rem;
+    height: 0.3rem;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.55;
+    transform: translateY(-0.1rem) rotate(45deg);
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      opacity var(--dur-base) var(--ease-out);
+  }
+
+  .hdr__item--mega:hover .hdr__chev,
+  .hdr__item--mega:focus-within .hdr__chev {
+    opacity: 1;
+    transform: translateY(0.04rem) rotate(-135deg);
+  }
+
+  .mega {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 5;
+    width: min(30rem, 100%);
+    padding-top: 0.55rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.45rem);
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      visibility 0s linear var(--dur-base);
+  }
+
+  .hdr__item--mega:hover .mega,
+  .hdr__item--mega:focus-within .mega {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .mega__inner {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 1rem;
+    padding: 0.8rem;
+    border: 1px solid rgb(7 26 31 / 0.08);
+    border-radius: 1.25rem;
+    background: rgb(248 250 249 / 0.96);
+    box-shadow: 0 1rem 3rem rgb(5 12 14 / 0.16);
+    backdrop-filter: blur(16px) saturate(130%);
+  }
+
+  .mega__stage {
+    display: grid;
+  }
+
+  .mega__fig {
+    position: relative;
+    grid-area: 1 / 1;
+    margin: 0;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 0.85rem;
+    background: var(--surface-inset);
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  .mega__fig :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .mega__fig figcaption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 2rem 0.7rem 0.6rem;
+    background: linear-gradient(180deg, transparent, rgb(5 12 14 / 0.82));
+    font-family: var(--font-label);
+    font-size: 0.62rem;
+    line-height: 1.35;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .mega__list {
+    display: grid;
+    align-content: space-between;
+    padding-block: 0.2rem;
+  }
+
+  .mega__eyebrow {
+    margin: 0 0 0 0.5rem;
+    font-family: var(--font-label);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-600);
+  }
+
+  .mega__list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mega__row {
+    display: grid;
+    grid-template-columns: 1.35rem 1fr auto;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.42rem 0.5rem;
+    border-radius: var(--radius-m);
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+
+  .mega__list li + li .mega__row {
+    box-shadow: 0 -1px 0 var(--line);
+  }
+
+  .mega__row:hover,
+  .mega__row:focus-visible {
+    background: rgb(14 124 134 / 0.07);
+  }
+
+  .mega__n {
+    font-family: var(--font-label);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgb(14 124 134 / 0.62);
+  }
+
+  .mega__name {
+    font-family: var(--font-text);
+    font-size: clamp(0.72rem, 0.68rem + 0.13vw, 0.82rem);
+    font-weight: 540;
+    line-height: 1.2;
+    color: rgb(7 26 31 / 0.72);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .mega__row:hover .mega__name,
+  .mega__row:focus-visible .mega__name {
+    color: var(--ink-1);
+  }
+
+  .mega__go {
+    font-size: 0.62rem;
+    color: var(--teal-600);
+    opacity: 0;
+    transform: translate(-0.25rem, 0.15rem);
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+
+  .mega__row:hover .mega__go,
+  .mega__row:focus-visible .mega__go {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mega__all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 0.5rem;
+    font-family: var(--font-label);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--teal-600);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .mega__all span {
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .mega__all:hover {
+    color: var(--teal-700);
+  }
+
+  .mega__all:hover span {
+    transform: translateX(0.2rem);
+  }
+
+  .mega__fig--0 {
+    opacity: 1;
+  }
+
+  .mega__inner:has(.mega__row:is(:hover, :focus-visible)) .mega__fig {
+    opacity: 0;
+  }
+
+  .mega__inner:has(.mega__row--0:is(:hover, :focus-visible)) .mega__fig--0,
+  .mega__inner:has(.mega__row--1:is(:hover, :focus-visible)) .mega__fig--1,
+  .mega__inner:has(.mega__row--2:is(:hover, :focus-visible)) .mega__fig--2,
+  .mega__inner:has(.mega__row--3:is(:hover, :focus-visible)) .mega__fig--3,
+  .mega__inner:has(.mega__row--4:is(:hover, :focus-visible)) .mega__fig--4,
+  .mega__inner:has(.mega__row--5:is(:hover, :focus-visible)) .mega__fig--5 {
+    opacity: 1;
+  }
+
+  .mega__inner:has(.mega__row--0:is(:hover, :focus-visible)) .mega__fig--0 :global(img),
+  .mega__inner:has(.mega__row--1:is(:hover, :focus-visible)) .mega__fig--1 :global(img),
+  .mega__inner:has(.mega__row--2:is(:hover, :focus-visible)) .mega__fig--2 :global(img),
+  .mega__inner:has(.mega__row--3:is(:hover, :focus-visible)) .mega__fig--3 :global(img),
+  .mega__inner:has(.mega__row--4:is(:hover, :focus-visible)) .mega__fig--4 :global(img),
+  .mega__inner:has(.mega__row--5:is(:hover, :focus-visible)) .mega__fig--5 :global(img) {
+    transform: none;
+  }
+
+  .hdr__cta,
+  .hdr__panel-cta {
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 3.45rem;
+    padding-inline: 1.45rem;
+    border-radius: 999px;
+    background: var(--teal-500);
+    font-family: var(--font-text);
+    font-size: 0.84rem;
+    font-weight: 650;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .hdr__cta:hover,
+  .hdr__panel-cta:hover {
+    background: var(--teal-700);
+    color: #fff;
+  }
+
+  .hdr__toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 3.1rem;
+    height: 3.1rem;
+    flex: none;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ink-1);
+    cursor: pointer;
+  }
+
+  .hdr__bars,
+  .hdr__bars::before,
+  .hdr__bars::after {
+    display: block;
+    width: 1.1rem;
+    height: 1.5px;
+    border-radius: 2px;
+    background: #fff;
+    transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+  }
+
+  .hdr__bars::before,
+  .hdr__bars::after {
+    content: '';
+    position: absolute;
+  }
+
+  .hdr__bars::before { transform: translateY(-0.34rem); }
+  .hdr__bars::after { transform: translateY(0.34rem); }
+  .hdr__toggle[aria-expanded='true'] .hdr__bars { background: transparent; }
+  .hdr__toggle[aria-expanded='true'] .hdr__bars::before { transform: rotate(45deg); }
+  .hdr__toggle[aria-expanded='true'] .hdr__bars::after { transform: rotate(-45deg); }
+
+  .hdr__panel {
+    margin-top: 0.55rem;
+    padding: 1.2rem;
+    border-radius: 1.5rem;
+  }
+
+  .hdr__panel-list {
+    display: grid;
+    gap: 0.15rem;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  .hdr__panel-list a {
+    display: block;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid rgb(7 26 31 / 0.09);
+    font-size: 1rem;
+    font-weight: 550;
+    text-decoration: none;
+    color: var(--ink-1);
+  }
+
+  .hdr__panel-cta {
+    display: flex;
+  }
+
+  .hdr__sub {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 0.9rem;
+    list-style: none;
+    padding: 0.5rem 0.5rem 0.85rem;
+    margin: 0;
+    border-bottom: 1px solid rgb(7 26 31 / 0.09);
+  }
+
+  .hdr__sub a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    padding: 0.32rem 0;
+    border: 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgb(7 26 31 / 0.66);
+  }
+
+  .hdr__sub span {
+    font-family: var(--font-label);
+    font-size: 0.68rem;
+    letter-spacing: var(--track-wide);
+    color: var(--teal-600);
+  }
+
+  .hdr__panel-list li:has(.hdr__sub) > a {
+    border-bottom: 0;
+  }
+
+  @media (width >= 62rem) {
+    .hdr__nav { display: block; }
+    .hdr__cta { display: inline-flex; }
+    .hdr__toggle,
+    .hdr__panel { display: none; }
+  }
+
+  @media (width < 34rem) {
+    .hdr {
+      inset-block-start: 0.85rem;
+      padding-inline: 0.85rem;
+    }
+
+    .hdr__inner {
+      min-height: 3.9rem;
+      padding-inline: 1rem 0.4rem;
+    }
+
+    .hdr__toggle {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+
+  document.querySelectorAll<HTMLElement>('[data-mega-jump]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const index = el.dataset.megaJump;
+      document.querySelector<HTMLButtonElement>(`[data-service-tab="${index}"]`)?.click();
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const active = document.activeElement;
+    if (active instanceof HTMLElement && active.closest('.hdr__item--mega')) active.blur();
+  });
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    if (panel) panel.hidden = isOpen;
+  });
+
+  panel?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a')) {
+      toggle?.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+    }
+  });
+</script>

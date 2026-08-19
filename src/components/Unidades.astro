@@ -1,0 +1,487 @@
+---
+import BandEdge from './BandEdge.astro';
+import Icon from './Icon.astro';
+import { unidades } from '../data/site';
+
+const mapPositions: Record<string, { x: string; y: string; short: string }> = {
+  macedo: { x: '72%', y: '75%', short: 'Macedo' },
+  'cidade-maia': { x: '38%', y: '25%', short: 'Cidade Maia' },
+};
+---
+
+<section class="section band unid" id="contato">
+  <BandEdge flip />
+
+  <div class="shell shell--wide">
+    <header class="unid__head">
+      <div>
+        <p class="eyebrow" data-reveal>Onde estamos</p>
+        <h2 data-reveal>Duas unidades.<br />Uma Kato <span class="em">perto de você.</span></h2>
+      </div>
+      <p class="unid__intro" data-reveal>
+        Macedo e Cidade Maia estão a poucos minutos de distância. Explore o mapa e escolha a unidade mais conveniente para a sua rotina.
+      </p>
+    </header>
+
+    <div class="locator" data-unit="macedo" data-reveal>
+      <div class="locator__map">
+        <iframe
+          title="Mapa das unidades Kato Odontologia em Guarulhos"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-46.536%2C-23.470%2C-46.516%2C-23.450&amp;layer=mapnik"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          tabindex="-1"
+        ></iframe>
+        <div class="locator__veil" aria-hidden="true"></div>
+
+        {
+          unidades.map((u) => {
+            const position = mapPositions[u.id];
+            return (
+              <button
+                class="map-pin"
+                type="button"
+                style={`--pin-x:${position.x};--pin-y:${position.y}`}
+                data-unit-trigger={u.id}
+                aria-label={`Mostrar ${u.name}`}
+                aria-pressed={u.id === 'macedo' ? 'true' : 'false'}
+              >
+                <span class="map-pin__dot" aria-hidden="true"></span>
+                <span class="map-pin__card">
+                  <small>Kato Odontologia</small>
+                  <strong>{u.name}</strong>
+                  <span>{position.short} · Guarulhos</span>
+                </span>
+              </button>
+            );
+          })
+        }
+
+        <div class="locator__map-note">
+          <span>As duas unidades</span>
+          <strong>em um só mapa</strong>
+        </div>
+      </div>
+
+      <aside class="locator__panel" aria-live="polite">
+        <div class="unit-tabs" role="tablist" aria-label="Escolha uma unidade">
+          {
+            unidades.map((u) => (
+              <button
+                class="unit-tab"
+                type="button"
+                role="tab"
+                data-unit-trigger={u.id}
+                aria-selected={u.id === 'macedo' ? 'true' : 'false'}
+              >
+                <span>{u.n}</span>
+                {mapPositions[u.id].short}
+              </button>
+            ))
+          }
+        </div>
+
+        {
+          unidades.map((u) => (
+            <article class="unit-detail" data-unit-panel={u.id} hidden={u.id !== 'macedo'}>
+              <div class="unit-detail__top">
+                <h3>{u.name}</h3>
+              </div>
+
+              <address>
+                {u.street}<br />
+                {u.district} · {u.city}<br />
+                São Paulo · SP
+              </address>
+
+              <div class="unit-detail__contacts" aria-label="Telefones da unidade">
+                <a href={u.phoneHref}>
+                  <Icon name="phone" size={18} />
+                  {u.phone}
+                </a>
+                <a href={u.whatsappHref} target="_blank" rel="noopener">
+                  <Icon name="whatsapp" size={18} />
+                  {u.whatsapp}
+                </a>
+              </div>
+
+              <div class="unit-detail__actions">
+                <a class="btn btn--solid" href={u.whatsappHref} target="_blank" rel="noopener">
+                  Agendar consulta <span class="btn__arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="unit-detail__map-link" href={u.mapsHref} target="_blank" rel="noopener">
+                  Traçar rota <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  const locators = document.querySelectorAll<HTMLElement>('.locator');
+
+  locators.forEach((locator) => {
+    const triggers = locator.querySelectorAll<HTMLElement>('[data-unit-trigger]');
+    const panels = locator.querySelectorAll<HTMLElement>('[data-unit-panel]');
+
+    const activate = (id: string) => {
+      locator.dataset.unit = id;
+
+      triggers.forEach((trigger) => {
+        const active = trigger.dataset.unitTrigger === id;
+        trigger.setAttribute('aria-pressed', String(active));
+        if (trigger.getAttribute('role') === 'tab') trigger.setAttribute('aria-selected', String(active));
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.unitPanel !== id;
+      });
+    };
+
+    triggers.forEach((trigger) => {
+      const id = trigger.dataset.unitTrigger;
+      if (!id) return;
+      trigger.addEventListener('click', () => activate(id));
+      if (trigger.classList.contains('map-pin')) trigger.addEventListener('mouseenter', () => activate(id));
+    });
+  });
+</script>
+
+<style>
+  .unid {
+    overflow: visible;
+    padding-top: clamp(7rem, 11vw, 11rem);
+  }
+
+  .unid__head {
+    display: grid;
+    gap: var(--space-l);
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .unid__head h2 {
+    max-width: 14ch;
+    margin-top: var(--space-m);
+    font-size: clamp(2.45rem, 4vw, 4rem);
+  }
+
+  .unid__intro {
+    max-width: 43ch;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  .locator {
+    display: grid;
+    min-height: clamp(29rem, 38vw, 34rem);
+    overflow: hidden;
+    border: 1px solid rgb(111 211 220 / 0.22);
+    border-radius: clamp(1.5rem, 3vw, 2.6rem);
+    background: var(--dark-1);
+    box-shadow: 0 2.5rem 6rem rgb(0 0 0 / 0.28);
+  }
+
+  .locator__map {
+    position: relative;
+    min-height: 26rem;
+    overflow: hidden;
+    background: #dce7e8;
+    isolation: isolate;
+  }
+
+  .locator__map iframe {
+    position: absolute;
+    inset: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border: 0;
+    pointer-events: none;
+    filter: saturate(0.45) contrast(0.92) brightness(1.04) hue-rotate(132deg);
+  }
+
+  .locator__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgb(8 21 26 / 0.06), transparent 42%, rgb(8 21 26 / 0.12)),
+      linear-gradient(0deg, rgb(8 21 26 / 0.15), transparent 34%);
+    mix-blend-mode: multiply;
+  }
+
+  .map-pin {
+    position: absolute;
+    z-index: 4;
+    left: var(--pin-x);
+    top: var(--pin-y);
+    width: 3rem;
+    height: 3.25rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+  }
+
+  .map-pin__dot {
+    position: absolute;
+    inset: 0;
+  }
+
+  .map-pin__dot {
+    inset: 0.35rem auto auto 50%;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50% 50% 50% 0;
+    background: linear-gradient(135deg, #64e2eb 0%, #08aaba 52%, #087681 100%);
+    box-shadow: 0.35rem 0.5rem 0.65rem rgb(5 42 48 / 0.4);
+    transform: translateX(-50%) rotate(-45deg);
+    transition: transform var(--dur-base) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+  }
+
+  .map-pin__dot::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgb(5 42 48 / 0.08);
+    transform: translate(-50%, -50%);
+  }
+
+  .map-pin:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 0.2rem;
+  }
+
+  .map-pin__card {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.85rem);
+    display: grid;
+    width: max-content;
+    min-width: 12.5rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgb(111 211 220 / 0.22);
+    border-radius: 0.85rem;
+    background: rgb(5 20 24 / 0.94);
+    color: #fff;
+    text-align: left;
+    box-shadow: 0 1rem 2.4rem rgb(5 12 14 / 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 0.55rem);
+    transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-base) var(--ease-out);
+    backdrop-filter: blur(12px);
+  }
+
+  .map-pin__card::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 0.65rem;
+    height: 0.65rem;
+    background: rgb(5 20 24 / 0.94);
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .map-pin__card small {
+    font-family: var(--font-label);
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--aqua-300);
+  }
+
+  .map-pin__card strong {
+    margin-top: 0.15rem;
+    font-size: 0.97rem;
+    line-height: 1.25;
+  }
+
+  .map-pin__card span {
+    margin-top: 0.08rem;
+    font-size: 0.75rem;
+    color: rgb(255 255 255 / 0.62);
+  }
+
+  .map-pin:hover .map-pin__card,
+  .map-pin:focus-visible .map-pin__card,
+  .map-pin[aria-pressed='true'] .map-pin__card {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .map-pin:hover .map-pin__dot,
+  .map-pin[aria-pressed='true'] .map-pin__dot {
+    filter: saturate(1.16) brightness(1.08);
+    transform: translate(-50%, -0.16rem) rotate(-45deg) scale(1.12);
+  }
+
+  .locator__map-note {
+    position: absolute;
+    z-index: 3;
+    left: 1.35rem;
+    bottom: 1.35rem;
+    display: grid;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid rgb(255 255 255 / 0.6);
+    border-radius: 0.75rem;
+    background: rgb(255 255 255 / 0.78);
+    color: var(--ink-1);
+    box-shadow: 0 0.8rem 2rem rgb(7 26 31 / 0.12);
+    backdrop-filter: blur(12px);
+  }
+
+  .locator__map-note span {
+    font-family: var(--font-label);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-600);
+  }
+
+  .locator__map-note strong { font-size: 0.9rem; }
+
+  .locator__panel {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: clamp(1.15rem, 2vw, 1.75rem);
+    background:
+      radial-gradient(circle at 100% 0%, rgb(43 184 196 / 0.13), transparent 36%),
+      var(--dark-1);
+  }
+
+  .unit-tabs {
+    display: flex;
+    gap: clamp(1.25rem, 2.5vw, 2rem);
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .unit-tab {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: -1px;
+    padding: 0.35rem 0.1rem 0.75rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--text-low);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: border-color var(--dur-base) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+
+  .unit-tab span {
+    font-family: var(--font-label);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .unit-tab[aria-selected='true'] {
+    border-bottom-color: var(--aqua-300);
+    color: var(--aqua-300);
+  }
+
+  .unit-detail {
+    align-self: center;
+    padding-block: clamp(1.25rem, 2vw, 1.75rem);
+    animation: unit-in 500ms var(--ease-out) both;
+  }
+
+  .unit-detail h3 {
+    font-size: clamp(1.8rem, 2.5vw, 2.55rem);
+  }
+
+  .unit-detail address {
+    margin-top: 0.9rem;
+    font-style: normal;
+    line-height: 1.55;
+    color: var(--text-mid);
+  }
+
+  .unit-detail__contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.1rem;
+    margin-top: 1.25rem;
+  }
+
+  .unit-detail__contacts a {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: fit-content;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-hi);
+  }
+
+  .unit-detail__contacts a:hover { color: var(--aqua-300); }
+
+  .unit-detail__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 1.4rem;
+  }
+
+  .unit-detail__map-link {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  @keyframes unit-in {
+    from { opacity: 0; transform: translateY(0.7rem); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (width >= 56rem) {
+    .unid__head {
+      grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+    }
+
+    .locator {
+      grid-template-columns: minmax(0, 1.45fr) minmax(21rem, 0.72fr);
+    }
+  }
+
+  @media (width < 56rem) {
+    .locator__map { min-height: clamp(23rem, 68vw, 29rem); }
+    .locator__panel { min-height: 25rem; }
+  }
+
+  @media (width < 38rem) {
+    .unid { padding-bottom: var(--space-xl); }
+    .locator { border-radius: 1.35rem; }
+    .locator__map { min-height: 22rem; }
+    .map-pin__card { min-width: 10.5rem; padding: 0.7rem 0.8rem; }
+    .locator__map-note { display: none; }
+    .locator__panel { min-height: 26rem; }
+    .unit-detail__actions { align-items: stretch; }
+    .unit-detail__actions .btn { width: 100%; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .unit-detail { animation: none; }
+  }
+</style>

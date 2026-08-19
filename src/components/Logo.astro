@@ -1,0 +1,48 @@
+---
+interface Props {
+  /** A slightly smaller lockup for compact navigation areas. */
+  compact?: boolean;
+  /** Surface hint kept for subtle contrast treatment. */
+  tone?: 'light' | 'dark';
+}
+
+const { compact = false, tone = 'light' } = Astro.props;
+---
+
+<span class:list={['logo', compact && 'logo--compact', `logo--${tone}`]}>
+  <img
+    src="/brand/kato-logo.svg"
+    alt="Kato Odontologia"
+    width="1445"
+    height="405"
+    decoding="async"
+  />
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    width: clamp(8.5rem, 10vw, 9.5rem);
+    line-height: 0;
+  }
+
+  .logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .logo--compact {
+    width: clamp(7.25rem, 8.5vw, 8.25rem);
+  }
+
+  .logo--light img {
+    filter: drop-shadow(0 1px 8px rgb(0 0 0 / 0.12));
+  }
+
+  @media (width < 34rem) {
+    .logo--compact {
+      width: 7rem;
+    }
+  }
+</style>

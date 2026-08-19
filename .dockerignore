@@ -1,0 +1,12 @@
+node_modules
+dist
+.astro
+.git
+.github
+.claude
+.vscode
+deliverables
+tools
+*.log
+*.md
+!README.md

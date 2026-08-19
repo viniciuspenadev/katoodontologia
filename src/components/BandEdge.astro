@@ -1,0 +1,67 @@
+---
+/**
+ * The transition between two bands.
+ *
+ * Akaki uses a symmetric arc. We use the logo's swoosh: an asymmetric sweep
+ * that rises to one side, traced by a hairline in the mark's gradient. It is
+ * the same structural idea, but drawn from our own identity instead of
+ * borrowed from theirs.
+ *
+ * Renders inside the band it belongs to, filled with that band's --surface,
+ * and overlaps upward into the preceding band.
+ */
+interface Props {
+  /** Mirror the sweep. Alternate along the page so it never feels like a stamp. */
+  flip?: boolean;
+}
+const { flip = false } = Astro.props;
+
+const id = `edge-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class:list={['edge', flip && 'edge--flip']} aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id={id} x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0%" stop-color="var(--silver-500)" stop-opacity="0" />
+        <stop offset="38%" stop-color="var(--silver-300)" stop-opacity="0.55" />
+        <stop offset="72%" stop-color="var(--aqua-300)" stop-opacity="0.85" />
+        <stop offset="100%" stop-color="var(--aqua-300)" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <path class="edge__fill" d="M0,120 L0,88 C 300,114 640,32 1000,12 C 1180,2 1330,1 1440,0 L1440,120 Z"></path>
+    <path
+      class="edge__line"
+      d="M0,88 C 300,114 640,32 1000,12 C 1180,2 1330,1 1440,0"
+      fill="none"
+      stroke={`url(#${id})`}
+      stroke-width="1.5"
+      vector-effect="non-scaling-stroke"></path>
+  </svg>
+</div>
+
+<style>
+  .edge {
+    position: absolute;
+    inset: auto 0 100% 0;
+    height: var(--edge-h);
+    z-index: 1;
+    pointer-events: none;
+    /* Hairline seam insurance: sub-pixel rounding can leave a 1px gap
+       between the SVG bottom and the band top. */
+    margin-bottom: -1px;
+  }
+
+  .edge--flip {
+    transform: scaleX(-1);
+  }
+
+  .edge svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .edge__fill {
+    fill: var(--surface);
+  }
+</style>

@@ -1,0 +1,276 @@
+---
+import { Image } from 'astro:assets';
+import heroPhoto from '../assets/equipe/renan-kato.jpg';
+import { primaryWhats } from '../data/site';
+---
+
+<section class="hero" id="top">
+  <div class="hero__card">
+    <div class="hero__visual">
+      <Image
+        src={heroPhoto}
+        alt="Dr. Renan Kato em uma das unidades da Kato Odontologia"
+        width={1920}
+        height={2880}
+        widths={[720, 1080, 1440, 1920, 2560]}
+        sizes="100vw"
+        format="avif"
+        quality={80}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="hero__shade" aria-hidden="true"></div>
+
+    <div class="shell shell--wide hero__content">
+      <div class="hero__message">
+        <h1 class="hero__title" data-reveal data-reveal-lines>
+          Seu sorriso muda.<br />
+          Nosso cuidado <span>continua.</span>
+        </h1>
+      </div>
+
+      <div class="hero__conversion" data-reveal>
+        <p>
+          Há mais de 30 anos, construindo uma história de cuidado, confiança e excelência
+          em saúde bucal, com uma equipe especializada em seis áreas da odontologia, em Guarulhos.
+        </p>
+
+        <div class="hero__actions">
+          <a class="hero__primary" href={primaryWhats} target="_blank" rel="noopener">
+            Agendar consulta
+            <span aria-hidden="true">→</span>
+          </a>
+          <a class="hero__secondary" href="#clinica">Conheça a Kato</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--paper-1);
+  }
+
+  .hero__card {
+    position: relative;
+    display: flex;
+    align-items: end;
+    min-height: 100svh;
+    padding-block: calc(var(--header-h) + var(--space-xl)) clamp(5rem, 11vh, 7rem);
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 0 0 clamp(1.5rem, 3vw, 2.75rem) clamp(1.5rem, 3vw, 2.75rem);
+    background: var(--dark-2);
+  }
+
+  .hero__visual,
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__visual {
+    z-index: -2;
+  }
+
+  .hero__visual :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 57% 29%;
+    filter: saturate(0.88) contrast(1.03) brightness(0.93);
+    transform: scale(1.012);
+  }
+
+  .hero__shade {
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgb(4 12 14 / 0.08) 5%, transparent 35%, rgb(4 12 14 / 0.86) 100%),
+      linear-gradient(90deg, rgb(4 12 14 / 0.58) 0%, transparent 52%, rgb(4 12 14 / 0.1) 75%, rgb(4 12 14 / 0.28) 100%);
+  }
+
+  .hero__content {
+    display: grid;
+    gap: var(--space-l);
+    align-items: end;
+  }
+
+  .hero__message {
+    min-width: 0;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.15rem;
+    font-family: var(--font-label);
+    font-size: clamp(0.7rem, 0.66rem + 0.16vw, 0.8rem);
+    font-weight: 550;
+    line-height: 1.3;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: #eef5f6;
+  }
+
+  .hero__eyebrow span {
+    color: var(--aqua-300);
+  }
+
+  .hero__title {
+    max-width: 13ch;
+    font-family: var(--font-text);
+    font-size: clamp(3rem, 5.25vw, 5.25rem);
+    font-weight: 520;
+    font-variation-settings: normal;
+    line-height: 0.94;
+    letter-spacing: -0.055em;
+    color: #fff;
+    text-wrap: balance;
+    text-shadow: 0 2px 30px rgb(0 0 0 / 0.22);
+  }
+
+  .hero__title span {
+    color: var(--aqua-300);
+  }
+
+  .hero__conversion {
+    max-width: 29rem;
+    justify-self: start;
+  }
+
+  .hero__conversion > p {
+    max-width: 43ch;
+    font-size: clamp(0.98rem, 0.94rem + 0.18vw, 1.08rem);
+    line-height: 1.55;
+    color: rgb(255 255 255 / 0.88);
+    text-shadow: 0 1px 16px rgb(0 0 0 / 0.35);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.35rem;
+  }
+
+  .hero__primary,
+  .hero__secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 3.15rem;
+    padding-inline: 1.4rem;
+    border-radius: 999px;
+    font-family: var(--font-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      background var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .hero__primary {
+    background: var(--teal-500);
+    color: #fff;
+    box-shadow: 0 0.8rem 2.4rem rgb(5 12 14 / 0.22);
+  }
+
+  .hero__primary:hover {
+    background: var(--aqua-300);
+    color: var(--ink-1);
+    transform: translateY(-2px);
+  }
+
+  .hero__secondary {
+    border: 1px solid rgb(255 255 255 / 0.34);
+    background: rgb(5 12 14 / 0.24);
+    color: #fff;
+    backdrop-filter: blur(8px);
+  }
+
+  .hero__secondary:hover {
+    background: #fff;
+    color: var(--ink-1);
+    transform: translateY(-2px);
+  }
+
+  @media (width >= 62rem) {
+    .hero__content {
+      grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.72fr);
+      gap: clamp(3rem, 6vw, 6rem);
+    }
+
+    .hero__conversion {
+      justify-self: end;
+      padding-bottom: 0.4rem;
+    }
+
+  }
+
+  @media (width < 62rem) {
+    .hero__card {
+      min-height: max(43rem, 100svh);
+      padding-block: calc(var(--header-h) + var(--space-xl)) clamp(3.25rem, 7vh, 4.25rem);
+    }
+
+    .hero__visual :global(img) {
+      object-position: 54% 26%;
+      filter: saturate(0.82) brightness(0.88);
+    }
+
+    .hero__shade {
+      background:
+        linear-gradient(180deg, rgb(4 12 14 / 0.08) 0%, rgb(4 12 14 / 0.08) 35%, rgb(4 12 14 / 0.94) 76%, rgb(4 12 14 / 0.98) 100%),
+        linear-gradient(90deg, rgb(4 12 14 / 0.26), transparent 85%);
+    }
+
+    .hero__title {
+      max-width: 11ch;
+      font-size: clamp(2.8rem, 11.5vw, 4.2rem);
+    }
+
+    .hero__conversion {
+      max-width: 35rem;
+    }
+  }
+
+  @media (width < 34rem) {
+    .hero__card {
+      min-height: max(43rem, 100svh);
+      border-radius: 0 0 1.4rem 1.4rem;
+    }
+
+    .hero__content {
+      width: calc(100% - 2rem);
+      gap: 1.25rem;
+    }
+
+    .hero__title {
+      font-size: clamp(2.55rem, 12.5vw, 3.5rem);
+    }
+
+    .hero__conversion > p {
+      font-size: 0.95rem;
+    }
+
+    .hero__actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero__primary,
+    .hero__secondary {
+      min-height: 3rem;
+      padding-inline: 0.8rem;
+      font-size: 0.78rem;
+    }
+  }
+</style>

@@ -1,0 +1,161 @@
+/* ==========================================================================
+   KATO ODONTOLOGIA — Design Tokens
+
+   Two-layer system:
+     1. RAW ramps — the literal colours sampled from the logo. Never used
+        directly in a component.
+     2. SEMANTIC tokens — what a component actually asks for. These are
+        redefined by `.band--light`, which is how one stylesheet drives both
+        the dark and the light sections without a single duplicated rule.
+   ========================================================================== */
+
+:root {
+  /* === 1. RAW ============================================================ */
+
+  /* Teal ramp — the tooth gradient, light → deep */
+  --aqua-100: #d9f2f5;
+  --aqua-200: #a8e2e9;
+  --aqua-300: #6fd3dc; /* logo highlight */
+  --teal-400: #2bb8c4;
+  --teal-500: #17a2ae; /* logo mid */
+  --teal-600: #0e7c86; /* logo deep */
+  --teal-700: #0a5d66;
+  --teal-800: #073f46;
+  --teal-900: #052a30;
+
+  /* Silver ramp — the swoosh */
+  --silver-100: #eef3f4;
+  --silver-300: #b6bfc3;
+  --silver-500: #7c888d;
+  --silver-700: #4a5459;
+
+  /* Dark surfaces */
+  --abyss: #050c0e;
+  --dark-1: #08151a;
+  --dark-2: #0d2027;
+  --dark-3: #123039;
+
+  /* Light surfaces — cool bone, tinted toward the mark, never pure #fff.
+     Pure white next to this teal reads as a printer test page. */
+  --paper-1: #f2f6f7;
+  --paper-2: #e8eff1;
+  --paper-3: #dbe6e9;
+
+  /* Ink for light bands — deep teal-black, not neutral grey */
+  --ink-1: #071a1f;
+  --ink-2: #0d2b33;
+
+  /* === 2. SEMANTIC — dark is the default ================================= */
+
+  --surface: var(--abyss);
+  --surface-raised: var(--dark-2);
+  --surface-inset: var(--dark-3);
+
+  --text-hi: #eef5f6;
+  --text-mid: rgb(238 245 246 / 0.72);
+  --text-low: rgb(238 245 246 / 0.46);
+  --label: var(--silver-300);
+
+  --line: rgb(182 191 195 / 0.14);
+  --line-strong: rgb(111 211 220 / 0.3);
+
+  --accent: var(--teal-500);
+  --accent-bright: var(--aqua-300); /* emphasis + hover on dark */
+  --accent-ink: #041416; /* text on top of accent fills */
+  --focus: var(--aqua-300);
+
+  --grad-mark: linear-gradient(135deg, var(--aqua-300) 0%, var(--teal-500) 45%, var(--teal-700) 100%);
+  --grad-swoosh: linear-gradient(90deg, transparent 0%, var(--silver-300) 40%, var(--aqua-300) 70%, transparent 100%);
+
+  /* === 3. TYPE ===========================================================
+     Newsreader carries the voice. It is a variable text serif with optical
+     sizing — warm and human where a geometric sans is merely tidy.
+     Jost is demoted to what it is genuinely best at: small, uppercase,
+     wide-tracked labels that echo the KATO / ODONTOLOGIA lockup exactly.
+     Geist runs body copy, where a display serif tires the eye.            */
+
+  --font-display: 'Newsreader Variable', 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-label: 'Jost Variable', 'Jost', system-ui, sans-serif;
+  --font-text: 'Geist Sans Variable', 'Geist Sans', system-ui, sans-serif;
+
+  --track-wide: 0.2em; /* labels, eyebrows, buttons */
+  --track-display: -0.018em;
+
+  --step--1: clamp(0.79rem, 0.77rem + 0.1vw, 0.85rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.13rem);
+  --step-1: clamp(1.2rem, 1.13rem + 0.36vw, 1.45rem);
+  --step-2: clamp(1.5rem, 1.36rem + 0.68vw, 1.95rem);
+  --step-3: clamp(1.85rem, 1.62rem + 1.15vw, 2.6rem);
+  --step-4: clamp(2.3rem, 1.94rem + 1.8vw, 3.5rem);
+  --step-5: clamp(2.75rem, 2.2rem + 2.75vw, 4.6rem);
+  --step-6: clamp(3.1rem, 2.5rem + 3vw, 5.2rem);
+
+  /* === 4. SPACE / LAYOUT ================================================= */
+
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: clamp(5rem, 3.4rem + 6.5vw, 9rem);
+
+  --measure: 62ch;
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3.5rem);
+  --container: 68rem;
+  --container-wide: 76rem;
+
+  --header-h: 5.25rem;
+  --edge-h: clamp(2.5rem, 1.2rem + 5.5vw, 6rem); /* swoosh divider height */
+
+  /* === 5. MOTION ========================================================= */
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 900ms;
+
+  --radius-s: 2px;
+  --radius-m: 4px;
+  --radius-l: 8px;
+}
+
+/* === Light band ==========================================================
+   Only the semantic layer flips. Every component inherits the change with
+   no light-mode branch of its own. */
+
+.band--light {
+  --surface: var(--paper-1);
+  --surface-raised: #fff;
+  --surface-inset: var(--paper-2);
+
+  --text-hi: var(--ink-1);
+  --text-mid: rgb(7 26 31 / 0.72);
+  --text-low: rgb(7 26 31 / 0.5);
+  --label: var(--teal-600);
+
+  --line: rgb(7 26 31 / 0.12);
+  --line-strong: rgb(14 124 134 / 0.34);
+
+  /* The mid teal fails contrast on bone; the deep teal passes AA. */
+  --accent: var(--teal-600);
+  --accent-bright: var(--teal-700);
+  --accent-ink: #fff;
+  --focus: var(--teal-600);
+
+  --grad-swoosh: linear-gradient(90deg, transparent 0%, var(--silver-500) 40%, var(--teal-500) 70%, transparent 100%);
+
+  background: var(--surface);
+  color: var(--text-hi);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur-base: 1ms;
+    --dur-slow: 1ms;
+  }
+}
