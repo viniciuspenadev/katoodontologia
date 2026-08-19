@@ -140,38 +140,46 @@ import familiaKato from '../assets/familia-kato-recorte-v2.png';
 
   @media (width < 62rem) {
     .historia {
-      height: clamp(48rem, 128vw, 58rem);
+      height: auto;
     }
 
     .historia__layout {
-      align-items: flex-start;
-      padding-top: clamp(8rem, 18vw, 10rem);
+      display: block;
+      padding-top: clamp(9.75rem, 22vw, 11.5rem);
       padding-bottom: 0;
     }
 
     .historia__content {
       width: min(100%, 36rem);
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .historia__eyebrow {
+      justify-content: center;
     }
 
     .historia__content h2 {
-      max-width: 11ch;
+      max-width: 13ch;
+      margin-inline: auto;
+    }
+
+    .historia__body {
+      margin-inline: auto;
     }
 
     .historia__family {
-      left: 50%;
-      bottom: clamp(-6rem, -9vw, -3.5rem);
-      width: min(88vw, 40rem);
+      position: static;
+      width: min(74vw, 30rem);
+      margin-inline: auto;
+      margin-top: -3.5rem;
+      margin-bottom: clamp(-4rem, -6vw, -2.5rem);
     }
   }
 
   @media (width < 38rem) {
-    .historia {
-      height: clamp(47rem, 180vw, 55rem);
-    }
-
     .historia__layout {
       width: calc(100% - 2rem);
-      padding-top: 7.5rem;
     }
 
     .historia__content h2 {
@@ -184,8 +192,9 @@ import familiaKato from '../assets/familia-kato-recorte-v2.png';
     }
 
     .historia__family {
-      bottom: -3rem;
-      width: min(100vw, 32rem);
+      width: min(90vw, 26rem);
+      margin-top: -2.75rem;
+      margin-bottom: -2.25rem;
     }
 
     .historia__wave {

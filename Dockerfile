@@ -3,6 +3,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 COPY . .
+ARG SITE_URL
+ENV SITE_URL=$SITE_URL
 RUN npm run build
 
 FROM nginx:1.27-alpine

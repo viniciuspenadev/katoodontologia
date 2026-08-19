@@ -59,7 +59,7 @@ import { stats } from '../data/site';
 
   .faixa__list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     list-style: none;
     padding: 0;
     margin: 0;
@@ -68,24 +68,22 @@ import { stats } from '../data/site';
   .stat {
     position: relative;
     display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.65rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.25rem;
     min-width: 0;
-    padding: 1rem 0.7rem;
+    padding: 0.85rem 0.3rem 0.75rem;
+    text-align: center;
     color: #eef5f6;
   }
 
-  .stat:nth-child(odd)::after {
+  .stat:not(:last-child)::after {
     content: '';
     position: absolute;
-    inset: 0.85rem 0 0.85rem auto;
+    inset: 0.7rem 0 0.7rem auto;
     width: 1px;
     background: rgb(182 191 195 / 0.14);
-  }
-
-  .stat:nth-child(-n + 2) {
-    border-bottom: 1px solid rgb(182 191 195 / 0.12);
   }
 
   .stat__value {
@@ -93,7 +91,7 @@ import { stats } from '../data/site';
     align-items: baseline;
     flex: none;
     font-family: var(--font-display);
-    font-size: clamp(1.65rem, 1.35rem + 1.1vw, 2.25rem);
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.25rem);
     font-weight: 380;
     font-variation-settings: 'opsz' 28;
     line-height: 1;
@@ -105,10 +103,10 @@ import { stats } from '../data/site';
   .stat__label {
     min-width: 0;
     font-family: var(--font-label);
-    font-size: clamp(0.65rem, 0.61rem + 0.18vw, 0.76rem);
+    font-size: clamp(0.58rem, 0.44rem + 0.42vw, 0.76rem);
     font-weight: 500;
-    line-height: 1.25;
-    letter-spacing: 0.1em;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: rgb(238 245 246 / 0.72);
   }
@@ -124,28 +122,26 @@ import { stats } from '../data/site';
     }
 
     .stat {
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.7rem;
       padding: 1.15rem 1rem;
     }
 
-    .stat:nth-child(-n + 2) {
-      border-bottom: 0;
+    .stat__label {
+      letter-spacing: 0.1em;
     }
 
     .stat:not(:last-child)::after {
-      content: '';
-      position: absolute;
       inset: 0.65rem 0 0.65rem auto;
-      width: 1px;
       background: linear-gradient(to bottom, transparent, rgb(182 191 195 / 0.2), transparent);
     }
   }
 
-  @media (width < 26rem) {
-    .stat {
-      flex-direction: column;
-      align-items: center;
-      gap: 0.35rem;
-      text-align: center;
+  @media (width < 34rem) {
+    .faixa__panel {
+      width: calc(100% - 1.5rem);
+      padding: 0.5rem 0.15rem;
     }
   }
 

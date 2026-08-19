@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://katoodontologia.com.br',
+  site: process.env.SITE_URL ?? 'https://kato.bluedigitalhub.com.br',
 });
