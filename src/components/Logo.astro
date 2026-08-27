@@ -7,14 +7,15 @@ interface Props {
 }
 
 const { compact = false, tone = 'light' } = Astro.props;
+const logoSrc = tone === 'light' ? '/brand/kato-logo-light.svg' : '/brand/kato-logo.svg';
 ---
 
 <span class:list={['logo', compact && 'logo--compact', `logo--${tone}`]}>
   <img
-    src="/brand/kato-logo.svg"
+    src={logoSrc}
     alt="Kato Odontologia"
-    width="1445"
-    height="405"
+    width="743"
+    height="665"
     decoding="async"
   />
 </span>
@@ -22,18 +23,20 @@ const { compact = false, tone = 'light' } = Astro.props;
 <style>
   .logo {
     display: inline-flex;
-    width: clamp(8.5rem, 10vw, 9.5rem);
+    width: auto;
+    height: clamp(4rem, 5vw, 4.75rem);
     line-height: 0;
   }
 
   .logo img {
     display: block;
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
   }
 
   .logo--compact {
-    width: clamp(7.25rem, 8.5vw, 8.25rem);
+    width: auto;
+    height: clamp(3rem, 3.5vw, 3.3rem);
   }
 
   .logo--light img {
@@ -42,7 +45,7 @@ const { compact = false, tone = 'light' } = Astro.props;
 
   @media (width < 34rem) {
     .logo--compact {
-      width: 7rem;
+      height: 2.85rem;
     }
   }
 </style>
