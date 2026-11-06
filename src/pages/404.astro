@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+
+const title = 'Página não encontrada — Kato Odontologia';
+const description = 'O endereço que você abriu não existe. Volte ao início do site da Kato Odontologia.';
+---
+
+<Base title={title} description={description}>
+  <main class="nf band" id="main">
+    <a class="nf__brand" href="/" aria-label="Kato Odontologia — início">
+      <Logo tone="dark" compact />
+    </a>
+
+    <p class="eyebrow">Erro 404</p>
+    <h1>Esta página não <span class="em">existe.</span></h1>
+    <p class="prose">
+      O endereço que você abriu mudou ou nunca esteve aqui. No início do site
+      estão as duas unidades, as seis especialidades e a equipe.
+    </p>
+
+    <a class="btn btn--solid nf__cta" href="/">
+      Voltar ao início
+      <span class="btn__arrow" aria-hidden="true">→</span>
+    </a>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: var(--space-s);
+    width: min(100% - var(--gutter) * 2, var(--container));
+    min-height: 100svh;
+    margin-inline: auto;
+    padding-block: var(--space-3xl);
+  }
+
+  .nf__brand {
+    display: inline-flex;
+    margin-bottom: var(--space-xl);
+    text-decoration: none;
+  }
+
+  .nf h1 {
+    font-size: clamp(2.5rem, 6vw, 4.4rem);
+    line-height: 1.04;
+  }
+
+  .nf__cta {
+    margin-top: var(--space-m);
+  }
+</style>
