@@ -88,6 +88,9 @@ const itens = especialidades.map((especialidade, index) => ({
     overflow-y: visible;
     padding-top: clamp(2.5rem, 4.5vw, 4.5rem);
     padding-bottom: 0;
+    background:
+      radial-gradient(circle at 50% 100%, rgb(190 245 246 / 0.34), transparent 36rem),
+      #fff;
   }
 
   .esp__head {
@@ -110,16 +113,16 @@ const itens = especialidades.map((especialidade, index) => ({
     z-index: 4;
     transform: translateY(clamp(4.5rem, 7vw, 7rem));
     padding: clamp(0.75rem, 1.5vw, 1.15rem);
-    border: 1px solid rgb(188 245 232 / 0.8);
+    border: 1px solid rgb(1 212 223 / 0.42);
     border-radius: clamp(1.75rem, 3.2vw, 3rem);
     background:
-      radial-gradient(circle at 5% 8%, rgb(207 248 238 / 0.96), transparent 30%),
-      radial-gradient(circle at 96% 8%, rgb(99 223 202 / 0.95), transparent 34%),
-      radial-gradient(circle at 86% 98%, rgb(41 177 186 / 0.82), transparent 40%),
-      linear-gradient(125deg, #bdeee3 0%, #83dfcf 45%, #28aeb7 100%);
+      radial-gradient(circle at 5% 8%, rgb(243 254 254 / 0.98), transparent 30%),
+      radial-gradient(circle at 96% 8%, rgb(190 245 246 / 0.98), transparent 34%),
+      radial-gradient(circle at 86% 98%, rgb(1 212 223 / 0.72), transparent 40%),
+      linear-gradient(125deg, #e7fbfc 0%, #bef5f6 48%, #01d4df 100%);
     box-shadow:
-      0 2.25rem 5.5rem rgb(8 49 53 / 0.2),
-      0 0 0 1px rgb(117 229 210 / 0.16);
+      0 2.25rem 5.5rem rgb(0 154 156 / 0.14),
+      0 0 0 1px rgb(1 212 223 / 0.12);
   }
 
   .esp__experience::before {
@@ -141,8 +144,8 @@ const itens = especialidades.map((especialidade, index) => ({
     overflow: hidden;
     border: 1px solid rgb(7 26 31 / 0.07);
     border-radius: clamp(1.25rem, 2.4vw, 2.25rem);
-    background: rgb(249 251 248 / 0.96);
-    box-shadow: 0 1.25rem 3rem rgb(8 49 53 / 0.12);
+    background: rgb(255 255 255 / 0.97);
+    box-shadow: 0 1.25rem 3rem rgb(16 45 48 / 0.1);
   }
 
   .esp__menu {
@@ -151,7 +154,7 @@ const itens = especialidades.map((especialidade, index) => ({
     display: grid;
     align-content: center;
     padding: clamp(1.25rem, 3vw, 2.8rem);
-    background: linear-gradient(90deg, #fbfcfa 75%, rgb(251 252 250 / 0));
+    background: linear-gradient(90deg, #fff 75%, rgb(255 255 255 / 0));
   }
 
   .esp__tab {
@@ -352,7 +355,7 @@ const itens = especialidades.map((especialidade, index) => ({
       align-content: initial;
       gap: 0.55rem;
       padding: 1rem;
-      background: #fbfcfa;
+      background: #fff;
     }
 
     .esp__tab {
@@ -362,7 +365,7 @@ const itens = especialidades.map((especialidade, index) => ({
       padding: 0.9rem;
       border: 1px solid rgb(7 26 31 / 0.09);
       border-radius: 1rem;
-      background: #f4f7f4;
+      background: var(--aqua-050);
     }
 
     .esp__tab:first-child {
@@ -370,8 +373,8 @@ const itens = especialidades.map((especialidade, index) => ({
     }
 
     .esp__tab.is-active {
-      border-color: rgb(23 162 174 / 0.24);
-      background: linear-gradient(135deg, #eaf5d5, #dff4ed);
+      border-color: rgb(1 212 223 / 0.34);
+      background: linear-gradient(135deg, var(--aqua-100), var(--aqua-200));
       box-shadow: 0 0.5rem 1.4rem rgb(8 49 53 / 0.08);
     }
 

@@ -2,26 +2,25 @@
    KATO ODONTOLOGIA — Design Tokens
 
    Two-layer system:
-     1. RAW ramps — the literal colours sampled from the logo. Never used
-        directly in a component.
-     2. SEMANTIC tokens — what a component actually asks for. These are
-        redefined by `.band--light`, which is how one stylesheet drives both
-        the dark and the light sections without a single duplicated rule.
+     1. RAW ramps — the literal colours sampled from the official logo.
+     2. SEMANTIC tokens — a light-first interface inspired by porcelain,
+        daylight and the turquoise facets of the Kato mark.
    ========================================================================== */
 
 :root {
   /* === 1. RAW ============================================================ */
 
-  /* Teal ramp — the tooth gradient, light → deep */
-  --aqua-100: #d9f2f5;
-  --aqua-200: #a8e2e9;
-  --aqua-300: #6fd3dc; /* logo highlight */
-  --teal-400: #2bb8c4;
-  --teal-500: #17a2ae; /* logo mid */
-  --teal-600: #0e7c86; /* logo deep */
-  --teal-700: #0a5d66;
-  --teal-800: #073f46;
-  --teal-900: #052a30;
+  /* Official Kato mark — sampled from kato-logo.svg, light → deep */
+  --aqua-050: #f3fefe;
+  --aqua-100: #e7fbfc;
+  --aqua-200: #bef5f6;
+  --aqua-300: #72eaee;
+  --teal-400: #01d7e1;
+  --teal-500: #01d4df;
+  --teal-600: #02afb3;
+  --teal-700: #009a9c;
+  --teal-800: #0e6463;
+  --teal-900: #094b4c;
 
   /* Silver ramp — the swoosh */
   --silver-100: #eef3f4;
@@ -29,43 +28,43 @@
   --silver-500: #7c888d;
   --silver-700: #4a5459;
 
-  /* Dark surfaces */
-  --abyss: #050c0e;
-  --dark-1: #08151a;
-  --dark-2: #0d2027;
-  --dark-3: #123039;
+  /* Legacy aliases kept for component compatibility. They are intentionally
+     light: the visual system no longer uses dark surfaces as a page base. */
+  --abyss: #f7fcfc;
+  --dark-1: #ffffff;
+  --dark-2: #f3fefe;
+  --dark-3: #e7fbfc;
 
-  /* Light surfaces — cool bone, tinted toward the mark, never pure #fff.
-     Pure white next to this teal reads as a printer test page. */
-  --paper-1: #f2f6f7;
-  --paper-2: #e8eff1;
-  --paper-3: #dbe6e9;
+  /* Porcelain surfaces */
+  --paper-1: #f7fcfc;
+  --paper-2: #edfafa;
+  --paper-3: #dff7f7;
 
-  /* Ink for light bands — deep teal-black, not neutral grey */
-  --ink-1: #071a1f;
-  --ink-2: #0d2b33;
+  /* Ink is used for type only, never as a large surface. */
+  --ink-1: #102d30;
+  --ink-2: #315154;
 
-  /* === 2. SEMANTIC — dark is the default ================================= */
+  /* === 2. SEMANTIC — light is the default ================================ */
 
-  --surface: var(--abyss);
-  --surface-raised: var(--dark-2);
-  --surface-inset: var(--dark-3);
+  --surface: var(--paper-1);
+  --surface-raised: #ffffff;
+  --surface-inset: var(--paper-2);
 
-  --text-hi: #eef5f6;
-  --text-mid: rgb(238 245 246 / 0.72);
-  --text-low: rgb(238 245 246 / 0.46);
-  --label: var(--silver-300);
+  --text-hi: var(--ink-1);
+  --text-mid: rgb(16 45 48 / 0.72);
+  --text-low: rgb(16 45 48 / 0.5);
+  --label: var(--teal-700);
 
-  --line: rgb(182 191 195 / 0.14);
-  --line-strong: rgb(111 211 220 / 0.3);
+  --line: rgb(0 154 156 / 0.14);
+  --line-strong: rgb(1 212 223 / 0.46);
 
   --accent: var(--teal-500);
-  --accent-bright: var(--aqua-300); /* emphasis + hover on dark */
-  --accent-ink: #041416; /* text on top of accent fills */
-  --focus: var(--aqua-300);
+  --accent-bright: var(--teal-600);
+  --accent-ink: #07383a;
+  --focus: var(--teal-700);
 
-  --grad-mark: linear-gradient(135deg, var(--aqua-300) 0%, var(--teal-500) 45%, var(--teal-700) 100%);
-  --grad-swoosh: linear-gradient(90deg, transparent 0%, var(--silver-300) 40%, var(--aqua-300) 70%, transparent 100%);
+  --grad-mark: linear-gradient(135deg, var(--aqua-200) 0%, var(--teal-500) 48%, var(--teal-700) 100%);
+  --grad-swoosh: linear-gradient(90deg, transparent 0%, var(--aqua-200) 36%, var(--teal-500) 70%, transparent 100%);
 
   /* === 3. TYPE ===========================================================
      Newsreader carries the voice. It is a variable text serif with optical
@@ -123,30 +122,28 @@
   --radius-l: 8px;
 }
 
-/* === Light band ==========================================================
-   Only the semantic layer flips. Every component inherits the change with
-   no light-mode branch of its own. */
+/* === Alternate light band ===============================================
+   Keeps the page rhythm without returning to dark blocks. */
 
 .band--light {
-  --surface: var(--paper-1);
+  --surface: #fff;
   --surface-raised: #fff;
   --surface-inset: var(--paper-2);
 
   --text-hi: var(--ink-1);
-  --text-mid: rgb(7 26 31 / 0.72);
-  --text-low: rgb(7 26 31 / 0.5);
-  --label: var(--teal-600);
+  --text-mid: rgb(16 45 48 / 0.72);
+  --text-low: rgb(16 45 48 / 0.5);
+  --label: var(--teal-700);
 
-  --line: rgb(7 26 31 / 0.12);
-  --line-strong: rgb(14 124 134 / 0.34);
+  --line: rgb(0 154 156 / 0.13);
+  --line-strong: rgb(1 212 223 / 0.42);
 
-  /* The mid teal fails contrast on bone; the deep teal passes AA. */
-  --accent: var(--teal-600);
-  --accent-bright: var(--teal-700);
-  --accent-ink: #fff;
-  --focus: var(--teal-600);
+  --accent: var(--teal-500);
+  --accent-bright: var(--teal-600);
+  --accent-ink: #07383a;
+  --focus: var(--teal-700);
 
-  --grad-swoosh: linear-gradient(90deg, transparent 0%, var(--silver-500) 40%, var(--teal-500) 70%, transparent 100%);
+  --grad-swoosh: linear-gradient(90deg, transparent 0%, var(--aqua-200) 38%, var(--teal-500) 72%, transparent 100%);
 
   background: var(--surface);
   color: var(--text-hi);

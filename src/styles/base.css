@@ -18,7 +18,7 @@ html {
 
 body {
   min-height: 100dvh;
-  background: var(--abyss);
+  background: var(--paper-1);
   color: var(--text-hi);
   font-family: var(--font-text);
   font-size: var(--step-0);
@@ -264,7 +264,7 @@ a:hover {
   z-index: 999;
   padding: var(--space-2xs) var(--space-s);
   background: var(--teal-500);
-  color: #041416;
+  color: var(--accent-ink);
   transform: translateY(-200%);
   transition: transform var(--dur-fast) var(--ease-out);
 }

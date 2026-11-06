@@ -34,7 +34,7 @@ const year = new Date().getFullYear();
     <div class="ftr__main">
       <div class="ftr__brand">
         <a href="#top" aria-label="Kato Odontologia — voltar ao início">
-          <Logo compact />
+          <Logo tone="dark" compact />
         </a>
         <p>Kato, clínica odontológica em Guarulhos desde 1995.</p>
         <div class="ftr__social">
@@ -74,16 +74,15 @@ const year = new Date().getFullYear();
         <p>© {year} {site.name}. Todos os direitos reservados.</p>
       </div>
 
-      <div class="ftr__studio" aria-label="Site desenvolvido pela BlueDigital Hub">
-        <span>Criação e desenvolvimento</span>
-        <img
-          src="/brand/logo_blue_cumprida-white.png"
-          alt="BlueDigital Hub"
-          width={220}
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
+      <a
+        class="ftr__studio"
+        href="https://bluedigitalhub.com.br"
+        target="_blank"
+        rel="noopener"
+        aria-label="BlueDigital Hub — bluedigitalhub.com.br"
+      >
+        <span class="ftr__studio-logo" aria-hidden="true"></span>
+      </a>
     </div>
   </div>
 </footer>
@@ -95,8 +94,9 @@ const year = new Date().getFullYear();
     overflow: visible;
     padding-block: clamp(4.5rem, 7vw, 7rem) clamp(1.5rem, 3vw, 2.5rem);
     background:
-      radial-gradient(circle at 12% 0%, rgb(43 184 196 / 0.11), transparent 30rem),
-      linear-gradient(145deg, #061115 0%, var(--abyss) 58%, #07181d 100%);
+      radial-gradient(circle at 12% 0%, rgb(190 245 246 / 0.7), transparent 30rem),
+      radial-gradient(circle at 90% 80%, rgb(1 212 223 / 0.08), transparent 28rem),
+      linear-gradient(145deg, #ffffff 0%, var(--paper-1) 58%, var(--aqua-100) 100%);
     color: var(--text-mid);
   }
 
@@ -112,10 +112,10 @@ const year = new Date().getFullYear();
     min-height: clamp(24rem, 32vw, 30rem);
     margin-top: calc(-1 * clamp(7rem, 8vw, 10rem));
     padding: clamp(2.5rem, 5vw, 4.75rem);
-    border-bottom: 1px solid rgb(182 191 195 / 0.16);
+    border: 1px solid rgb(1 212 223 / 0.2);
     border-radius: clamp(1.5rem, 3vw, 2.75rem);
-    background: #061115;
-    box-shadow: 0 2.5rem 5.5rem rgb(0 0 0 / 0.24);
+    background: #fff;
+    box-shadow: 0 2.5rem 5.5rem rgb(16 45 48 / 0.13);
   }
 
   .ftr__invite-photo,
@@ -138,8 +138,8 @@ const year = new Date().getFullYear();
     z-index: -1;
     width: 100%;
     background:
-      linear-gradient(90deg, #061115 0%, #061115 34%, rgb(6 17 21 / 0.9) 44%, rgb(6 17 21 / 0.24) 64%, transparent 82%),
-      linear-gradient(0deg, rgb(6 17 21 / 0.2), transparent 55%);
+      linear-gradient(90deg, #fff 0%, #fff 34%, rgb(255 255 255 / 0.94) 46%, rgb(255 255 255 / 0.48) 66%, transparent 84%),
+      linear-gradient(0deg, rgb(231 251 252 / 0.22), transparent 55%);
   }
 
   .ftr__invite-copy {
@@ -155,7 +155,7 @@ const year = new Date().getFullYear();
     font-weight: 550;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--aqua-300);
+    color: var(--teal-700);
   }
 
   .ftr__invite h2 {
@@ -169,7 +169,7 @@ const year = new Date().getFullYear();
 
   .ftr__invite h2 em {
     font-weight: inherit;
-    color: var(--aqua-300);
+    color: var(--teal-600);
   }
 
   .ftr__cta {
@@ -183,17 +183,17 @@ const year = new Date().getFullYear();
     padding-inline: 1.6rem;
     border-radius: 999px;
     background: var(--teal-500);
-    color: #fff;
+    color: var(--accent-ink);
     font-size: 0.88rem;
     font-weight: 650;
     text-decoration: none;
-    box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.2);
+    box-shadow: 0 1rem 2.5rem rgb(1 175 179 / 0.18);
     transition: transform var(--dur-fast) var(--ease-out), background var(--dur-base) var(--ease-out);
   }
 
   .ftr__cta:hover {
-    background: var(--aqua-300);
-    color: var(--ink-1);
+    background: var(--teal-600);
+    color: #fff;
     transform: translateY(-2px);
   }
 
@@ -211,7 +211,7 @@ const year = new Date().getFullYear();
     max-width: 31ch;
     margin-top: 1.15rem;
     line-height: 1.6;
-    color: rgb(238 245 246 / 0.62);
+    color: rgb(16 45 48 / 0.66);
   }
 
   .ftr__social {
@@ -225,12 +225,12 @@ const year = new Date().getFullYear();
   .ftr__nav a {
     font-size: 0.86rem;
     text-decoration: none;
-    color: rgb(238 245 246 / 0.76);
+    color: rgb(16 45 48 / 0.76);
   }
 
   .ftr__social a:hover,
   .ftr__nav a:hover {
-    color: var(--aqua-300);
+    color: var(--teal-700);
   }
 
   .ftr__nav ul {
@@ -251,9 +251,9 @@ const year = new Date().getFullYear();
     gap: 1rem;
     align-items: center;
     padding-block: 1rem;
-    border-bottom: 1px solid rgb(182 191 195 / 0.13);
+    border-bottom: 1px solid rgb(0 154 156 / 0.13);
     text-decoration: none;
-    color: rgb(238 245 246 / 0.72);
+    color: rgb(16 45 48 / 0.7);
   }
 
   .ftr__unit:first-of-type {
@@ -271,11 +271,11 @@ const year = new Date().getFullYear();
   }
 
   .ftr__unit span:last-child {
-    color: var(--aqua-300);
+    color: var(--teal-700);
   }
 
   .ftr__unit:hover {
-    color: var(--aqua-300);
+    color: var(--teal-700);
   }
 
   .ftr__bottom {
@@ -283,35 +283,35 @@ const year = new Date().getFullYear();
     flex-direction: column;
     gap: 1.75rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgb(182 191 195 / 0.16);
+    border-top: 1px solid rgb(0 154 156 / 0.15);
   }
 
   .ftr__legal {
     display: grid;
     gap: 0.25rem;
     font-size: 0.7rem;
-    color: rgb(238 245 246 / 0.42);
+    color: rgb(16 45 48 / 0.5);
   }
 
   .ftr__studio {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1rem;
     align-items: center;
+    width: fit-content;
+    text-decoration: none;
   }
 
-  .ftr__studio span {
-    font-family: var(--font-label);
-    font-size: 0.56rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgb(238 245 246 / 0.4);
+  .ftr__studio-logo {
+    display: block;
+    width: clamp(8.25rem, 11vw, 10rem);
+    aspect-ratio: 1916 / 396;
+    background: var(--teal-500);
+    -webkit-mask: url('/brand/logo_blue_cumprida.png') center / contain no-repeat;
+    mask: url('/brand/logo_blue_cumprida.png') center / contain no-repeat;
+    transition: background var(--dur-fast) var(--ease-out);
   }
 
-  .ftr__studio :global(img) {
-    width: clamp(7.25rem, 10vw, 9rem);
-    height: auto;
-    opacity: 0.9;
+  .ftr__studio:hover .ftr__studio-logo {
+    background: var(--teal-700);
   }
 
   @media (width >= 55rem) {
@@ -350,8 +350,8 @@ const year = new Date().getFullYear();
 
     .ftr__invite-shade {
       background:
-        linear-gradient(90deg, #061115 0%, rgb(6 17 21 / 0.98) 38%, rgb(6 17 21 / 0.65) 66%, rgb(6 17 21 / 0.16) 100%),
-        linear-gradient(0deg, rgb(6 17 21 / 0.28), transparent 58%);
+        linear-gradient(90deg, #fff 0%, rgb(255 255 255 / 0.98) 38%, rgb(255 255 255 / 0.72) 66%, rgb(255 255 255 / 0.12) 100%),
+        linear-gradient(0deg, rgb(231 251 252 / 0.24), transparent 58%);
     }
   }
 
@@ -375,8 +375,8 @@ const year = new Date().getFullYear();
 
     .ftr__invite-shade {
       background:
-        linear-gradient(180deg, #061115 0%, rgb(6 17 21 / 0.96) 44%, rgb(6 17 21 / 0.52) 72%, rgb(6 17 21 / 0.18) 100%),
-        linear-gradient(90deg, rgb(6 17 21 / 0.75), transparent);
+        linear-gradient(180deg, #fff 0%, rgb(255 255 255 / 0.96) 44%, rgb(255 255 255 / 0.62) 72%, rgb(255 255 255 / 0.18) 100%),
+        linear-gradient(90deg, rgb(255 255 255 / 0.86), transparent);
     }
 
     .ftr__invite h2 {
