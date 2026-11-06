@@ -21,6 +21,8 @@ const jsonLd = {
   name: site.name,
   description,
   url: 'https://katoodontologia.com.br/',
+  image: 'https://katoodontologia.com.br/brand/og-kato-light.jpg',
+  logo: 'https://katoodontologia.com.br/brand/kato-logo.svg',
   sameAs: [site.social.instagram, site.social.facebook],
   foundingDate: String(site.since),
   availableService: especialidades.map((e) => ({ '@type': 'MedicalProcedure', name: e.name })),
